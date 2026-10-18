@@ -1,0 +1,17 @@
+{
+  "id": "./",
+  "name": "YORU — 夜を整え、星を育てる",
+  "short_name": "YORU",
+  "description": "眠る前に訪れる、静かな星空の居場所。",
+  "lang": "ja",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0d1229",
+  "theme_color": "#0d1229",
+  "icons": [
+    {"src":"./icons/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any"},
+    {"src":"./icons/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any"}
+  ]
+}

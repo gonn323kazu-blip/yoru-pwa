@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d1229">
+<meta name="description" content="眠る前に訪れる、静かな星空の居場所。">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icons/icon-192.png">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<link rel="stylesheet" href="./style.css">
+<title>YORU — 夜を整え、星を育てる</title>
+</head>
+<body>
+<div class="ambient a1"></div><div class="ambient a2"></div>
+<header class="topbar">
+  <button class="wordmark" data-screen="home" aria-label="ホームへ">YORU<span>夜を整え、星を育てる。</span></button>
+  <button class="round-button" data-screen="settings" aria-label="設定">⚙</button>
+</header>
+<main>
+<section class="screen active" id="screen-home">
+  <div class="home-hero">
+    <div class="sky-art" aria-hidden="true"><span class="moon"></span><i class="s s1">✦</i><i class="s s2">✧</i><i class="s s3">·</i><i class="s s4">✧</i><span class="horizon"></span></div>
+    <p class="eyebrow" id="today-date">YOUR QUIET PLACE</p>
+    <h1>こんばんは。</h1>
+    <p class="intro">今日も、おつかれさま。<br>少しだけ、自分を休ませる時間に。</p>
+    <div class="star-pill"><span>✦</span><strong id="star-count">0</strong><small>灯った星</small></div>
+  </div>
+  <article class="tonight-card">
+    <div class="eyebrow">TONIGHT'S ROUTINE</div>
+    <div class="tonight-row"><div class="routine-symbol" id="home-symbol">〰</div><div class="grow"><h2 id="home-routine-title">呼吸を整える</h2><p id="home-routine-desc">ゆっくり呼吸する · 約1分</p></div></div>
+    <button class="primary" data-screen="rituals">夜習慣を選ぶ <span>→</span></button>
+    <button class="plain-link" id="home-quick-start">おすすめの習慣を始める</button>
+  </article>
+  <p class="soft-note">できる日も、できない日も。あなたのペースで大丈夫。</p>
+</section>
+
+<section class="screen" id="screen-rituals">
+  <div class="page-heading"><p class="eyebrow">A LITTLE RITUAL</p><h1>今の気分はどれに近い？</h1><p>好きなものをひとつ選んでみよう。</p></div>
+  <div class="ritual-list">
+    <button class="ritual" data-ritual="breath"><span class="ritual-icon">〰</span><span class="grow"><b>呼吸を整える</b><small>自然な呼吸を感じる · 1分</small></span><span class="arrow">›</span></button>
+    <button class="ritual" data-ritual="stretch"><span class="ritual-icon">✧</span><span class="grow"><b>体をゆるめる</b><small>肩や背中をゆっくり伸ばす · 2分</small></span><span class="arrow">›</span></button>
+    <button class="ritual" data-ritual="quiet"><span class="ritual-icon">☾</span><span class="grow"><b>静かに過ごす</b><small>目を閉じてひと休み · 1分</small></span><span class="arrow">›</span></button>
+  </div>
+  <button class="plain-link wide" id="skip-tonight">今日は選ばずに休む</button>
+  <p class="soft-note">ひとつできたら十分。毎日同じでなくても大丈夫。</p>
+</section>
+
+<section class="screen" id="screen-goodnight">
+  <div class="goodnight-scene"><div class="goodnight-moon">☾</div><p class="eyebrow">GOOD NIGHT</p><h1>今夜は、ここまで。</h1><p>何かを選ばなくても大丈夫。<br>YORUはここでおしまいです。</p><p class="goodnight-note">スマートフォンを伏せて、ゆっくり休んでね。</p><span class="goodnight-star">✦　·　✧</span></div>
+</section>
+
+<section class="screen" id="screen-session">
+  <div class="session">
+    <p class="eyebrow">SLOW DOWN</p>
+    <div class="breath-orb" id="breath-orb"><span id="session-icon">☾</span></div>
+    <h1 id="session-title">ゆっくり、ひと息。</h1>
+    <p class="session-desc" id="session-desc">無理のない姿勢で、自然な呼吸を感じてみましょう。</p>
+    <div class="timer" id="timer">01:00</div><p class="timer-note" id="timer-note">準備ができたら始めましょう</p>
+    <button class="primary" id="timer-toggle">始める <span>→</span></button>
+    <button class="plain-link" id="finish-now">このまま完了する</button>
+    <button class="plain-link muted-link" data-screen="rituals">別の習慣を選ぶ</button>
+  </div>
+</section>
+
+<section class="screen" id="screen-complete">
+  <div class="completion">
+    <div class="star-scene" aria-hidden="true"><span class="orbit-star">✧</span><span class="main-star">✦</span><span class="orbit-star two">·</span></div>
+    <p class="eyebrow">A STAR FOR TONIGHT</p>
+    <h1 id="complete-title">今夜の星が灯りました。</h1>
+    <p class="intro" id="complete-message">今日も自分を休ませる時間が作れたね。</p>
+    <div class="summary-line"><span>今夜の習慣</span><strong id="completed-name">呼吸を整える · 完了</strong></div>
+    <button class="primary" data-screen="journal">今週の記録を見る <span>→</span></button>
+    <button class="plain-link" id="finish-night">今日はここまでにする</button>
+    <p class="soft-note">このままスマートフォンを置いて、夜の時間へ。</p>
+  </div>
+</section>
+
+<section class="screen" id="screen-journal">
+  <div class="page-heading"><p class="eyebrow">YOUR NIGHT JOURNAL</p><h1>自分の夜を振り返る</h1><p>できた日も、できなかった日も、自分の記録。</p></div>
+  <article class="panel">
+    <div class="panel-title"><h2>今週の夜習慣</h2><span class="muted" id="week-count">0日</span></div>
+    <div class="week" id="week-grid"></div><p class="reflection" id="week-reflection">今週の記録がここに表示されます。</p>
+  </article>
+  <article class="panel chart-panel">
+    <div class="panel-title"><h2>記録のグラフ</h2><span class="muted" id="chart-period-label">1週間</span></div>
+    <p class="muted">表示したい期間を選んで、変化を確認できます。</p>
+    <div class="range-switch" role="group" aria-label="グラフの表示期間">
+      <button type="button" class="range-button" data-range="day" aria-pressed="false">1日</button>
+      <button type="button" class="range-button active" data-range="week" aria-pressed="true">1週間</button>
+      <button type="button" class="range-button" data-range="month" aria-pressed="false">1か月</button>
+      <button type="button" class="range-button" data-range="year" aria-pressed="false">1年</button>
+    </div>
+    <h3 class="chart-heading">寝る前のスマホ時間</h3>
+    <div id="phone-chart" class="line-chart" aria-label="寝る前のスマートフォン使用時間の折れ線グラフ"></div>
+    <p id="phone-trend" class="reflection chart-reflection">スマホ時間を記録すると、ここに変化が表示されます。</p>
+    <div class="chart-separator"></div>
+    <h3 class="chart-heading">寝つくまでの時間</h3>
+    <div id="latency-chart" class="line-chart" aria-label="寝つくまでの時間の折れ線グラフ"></div>
+    <p id="latency-trend" class="reflection chart-reflection">寝つくまでの時間を記録すると、ここに変化が表示されます。</p>
+  </article>
+  <article class="panel chart-panel">
+    <div class="panel-title"><h2>今までの小さな積み重ね</h2><span class="muted" id="record-days">0日</span></div>
+    <div class="progress-track"><div id="record-progress" class="progress-fill"></div></div>
+    <p id="progress-message" class="reflection chart-reflection">記録を残すたびに、自分の夜を知る手がかりが増えていきます。</p>
+  </article>
+  <form class="panel form-panel" id="sleep-form">
+    <h2>睡眠・スマートフォンの記録</h2><p class="muted">わかる範囲で大丈夫。入力した内容はこの端末に保存されます。</p>
+    <label>ベッドに入った時刻<input id="bedtime" type="time"></label>
+    <label>寝つくまでの時間（分）<input id="latency" type="number" min="0" max="600" inputmode="numeric" placeholder="例：20"></label>
+    <label>寝る前のスマートフォン使用（分）<input id="phone" type="number" min="0" max="600" inputmode="numeric" placeholder="例：45"></label>
+    <label>起きた時刻<input id="waketime" type="time"></label>
+    <label>目覚めたときの感覚 <output id="feeling-label">ふつう</output><input id="feeling" type="range" min="1" max="5" value="3"><span class="range-labels"><small>すっきりしない</small><small>すっきり</small></span></label>
+    <label>今日のひとこと（任意）<textarea id="note" rows="2" maxlength="160" placeholder="気づいたことがあれば"></textarea></label>
+    <button class="primary" type="submit">今日の記録を保存 <span>→</span></button><p class="status" id="record-status" role="status"></p>
+    <button class="secondary" type="button" id="export-data">記録をCSVで書き出す ↓</button>
+  </form>
+  <p class="data-disclaimer">このアプリは医療的な診断を行いません。記録は端末内に保存されます。ブラウザのデータを削除すると消える場合があります。</p>
+</section>
+
+<section class="screen" id="screen-settings">
+  <div class="page-heading"><p class="eyebrow">YOUR PACE</p><h1>自分に合う夜に</h1><p>無理なく続けられるように設定できます。</p></div>
+  <form class="panel form-panel" id="settings-form">
+    <label>目標の就寝時刻<input id="goal-bedtime" type="time" value="23:30"></label>
+    <label class="switch-row"><span><b>リマインダー</b><small>アプリを開いている間に就寝準備をお知らせ</small></span><input id="reminder-on" type="checkbox"></label>
+    <p class="muted">Web版では、ブラウザを閉じている間の確実な通知には追加の仕組みが必要です。この設定だけでバックグラウンド通知が保証されるわけではありません。</p>
+    <button class="primary" type="submit">設定を保存 <span>→</span></button><p class="status" id="settings-status" role="status"></p>
+    <button class="secondary" type="button" id="test-reminder">通知をテストする</button>
+  </form>
+  <article class="panel"><h2>YORUについて</h2><p class="muted">YORUは、寝る前の小さな習慣づくりを支援する研究用プロトタイプです。できなかった日を罰する仕組みはありません。</p><button class="danger-link" id="delete-data">この端末の記録をすべて削除</button></article>
+  <article class="panel"><h2>ホーム画面に追加</h2><p class="muted">HTTPSで公開したあと、Androidではブラウザメニュー、iPhoneではSafariの共有メニューから「ホーム画面に追加」を選ぶとアプリのように起動できます。</p></article>
+</section>
+</main>
+
+<nav class="bottom-nav" id="bottom-nav" aria-label="メインナビゲーション">
+  <button class="nav-item active" data-screen="home"><span>☾</span><small>ホーム</small></button>
+  <button class="nav-item" data-screen="rituals"><span>✧</span><small>夜習慣</small></button>
+  <button class="nav-item" data-screen="journal"><span>⌁</span><small>記録</small></button>
+  <button class="nav-item" data-screen="settings"><span>⚙</span><small>設定</small></button>
+</nav>
+<div class="toast" id="toast" role="status"></div>
+<script src="./app.js"></script>
+</body>
+</html>
