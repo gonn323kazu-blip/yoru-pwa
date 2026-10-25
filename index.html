@@ -56,6 +56,10 @@
     <div class="breath-orb" id="breath-orb"><span id="session-icon">☾</span></div>
     <h1 id="session-title">ゆっくり、ひと息。</h1>
     <p class="session-desc" id="session-desc">無理のない姿勢で、自然な呼吸を感じてみましょう。</p>
+    <div class="routine-guide" id="routine-guide" aria-label="習慣のガイド">
+      <div class="guide-visual" id="guide-visual" aria-hidden="true"><span>☾</span><i>✦</i><b>〰</b></div>
+      <p id="guide-caption">肩の力を抜いて、自然な呼吸を感じましょう。</p>
+    </div>
     <div class="timer" id="timer">01:00</div><p class="timer-note" id="timer-note">準備ができたら始めましょう</p>
     <button class="primary" id="timer-toggle">始める <span>→</span></button>
     <button class="plain-link" id="finish-now">このまま完了する</button>
@@ -70,6 +74,12 @@
     <h1 id="complete-title">今夜の星が灯りました。</h1>
     <p class="intro" id="complete-message">今日も自分を休ませる時間が作れたね。</p>
     <div class="summary-line"><span>今夜の習慣</span><strong id="completed-name">呼吸を整える · 完了</strong></div>
+    <div class="self-check" id="self-check">
+      <h2 id="self-check-title">今の自分に、ひとこと。</h2>
+      <p id="self-check-question">少しでも、体や気持ちがゆるみましたか？</p>
+      <div class="self-check-actions"><button class="secondary" id="self-check-yes" type="button">できました ✦</button><button class="secondary" id="self-check-skip" type="button">今日は評価しない</button></div>
+      <p class="status" id="star-status" role="status"></p>
+    </div>
     <button class="primary" data-screen="journal">今週の記録を見る <span>→</span></button>
     <button class="plain-link" id="finish-night">今日はここまでにする</button>
     <p class="soft-note">このままスマートフォンを置いて、夜の時間へ。</p>
@@ -98,6 +108,20 @@
     <h3 class="chart-heading">寝つくまでの時間</h3>
     <div id="latency-chart" class="line-chart" aria-label="寝つくまでの時間の折れ線グラフ"></div>
     <p id="latency-trend" class="reflection chart-reflection">寝つくまでの時間を記録すると、ここに変化が表示されます。</p>
+  </article>
+  <article class="panel insight-panel">
+    <div class="panel-title"><h2>夜の傾向と小さなヒント</h2><span class="muted">MY INSIGHT</span></div>
+    <p id="insight-text" class="reflection insight-copy">記録がたまると、あなたの夜の傾向がここに表示されます。</p>
+    <button class="secondary" type="button" id="make-ai-prompt">AIに相談する文章を作る</button>
+    <textarea id="ai-prompt" class="ai-prompt" rows="5" readonly placeholder="記録が増えると、相談文を作成できます"></textarea>
+    <button class="plain-link" type="button" id="copy-ai-prompt">相談文をコピーする</button>
+    <p class="muted">記録は自動送信されません。相談文を確認してから、自分でChatGPTなどに貼り付けてください。</p>
+  </article>
+  <article class="panel constellation-panel">
+    <div class="panel-title"><h2>星座コレクション</h2><span class="muted" id="constellation-count">0個</span></div>
+    <p class="muted">1週間に星を3つ集めると、その週の星座が完成します。</p>
+    <div id="constellation-current" class="constellation-current"><span class="constellation-art">✧ · ✦</span><p>今週の星を集めて、星座を灯そう。</p></div>
+    <div id="constellation-gallery" class="constellation-gallery"></div>
   </article>
   <article class="panel chart-panel">
     <div class="panel-title"><h2>今までの小さな積み重ね</h2><span class="muted" id="record-days">0日</span></div>
