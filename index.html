@@ -117,12 +117,6 @@
     <button class="plain-link" type="button" id="copy-ai-prompt">相談文をコピーする</button>
     <p class="muted">記録は自動送信されません。相談文を確認してから、自分でChatGPTなどに貼り付けてください。</p>
   </article>
-  <article class="panel constellation-panel">
-    <div class="panel-title"><h2>星座コレクション</h2><span class="muted" id="constellation-count">0個</span></div>
-    <p class="muted">1週間に星を3つ集めると、その週の星座が完成します。</p>
-    <div id="constellation-current" class="constellation-current"><span class="constellation-art">✧ · ✦</span><p>今週の星を集めて、星座を灯そう。</p></div>
-    <div id="constellation-gallery" class="constellation-gallery"></div>
-  </article>
   <article class="panel chart-panel">
     <div class="panel-title"><h2>今までの小さな積み重ね</h2><span class="muted" id="record-days">0日</span></div>
     <div class="progress-track"><div id="record-progress" class="progress-fill"></div></div>
@@ -140,6 +134,17 @@
     <button class="secondary" type="button" id="export-data">記録をCSVで書き出す ↓</button>
   </form>
   <p class="data-disclaimer">このアプリは医療的な診断を行いません。記録は端末内に保存されます。ブラウザのデータを削除すると消える場合があります。</p>
+</section>
+
+<section class="screen" id="screen-constellations">
+  <div class="page-heading"><p class="eyebrow">MY CONSTELLATIONS</p><h1>星座を眺める</h1><p>小さな夜の積み重ねが、星座になって残ります。</p></div>
+  <article class="panel constellation-panel">
+    <div class="panel-title"><h2>今週の星空</h2><span class="muted" id="constellation-count">0個</span></div>
+    <p class="muted">1週間に星を3つ集めると、その週の星座が完成します。</p>
+    <div id="constellation-current" class="constellation-current"><span class="constellation-art">✧ · ✦</span><p>今週の星を集めて、星座を灯そう。</p></div>
+    <div id="constellation-gallery" class="constellation-gallery"></div>
+  </article>
+  <p class="soft-note">星は1日1つ。1週間に3つ集めると、その週の星座が完成します。</p>
 </section>
 
 <section class="screen" id="screen-settings">
@@ -160,6 +165,7 @@
   <button class="nav-item active" data-screen="home"><span>☾</span><small>ホーム</small></button>
   <button class="nav-item" data-screen="rituals"><span>✧</span><small>夜習慣</small></button>
   <button class="nav-item" data-screen="journal"><span>⌁</span><small>記録</small></button>
+  <button class="nav-item" data-screen="constellations"><span>✦</span><small>星座</small></button>
   <button class="nav-item" data-screen="settings"><span>⚙</span><small>設定</small></button>
 </nav>
 <div class="toast" id="toast" role="status"></div>

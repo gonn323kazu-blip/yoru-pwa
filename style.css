@@ -25,3 +25,12 @@ main{max-width:560px;margin:auto;padding:0 18px}.screen{display:none;animation:f
 .stretch-gallery{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%}
 .guide-visual:has(.stretch-gallery){height:auto;min-height:0;display:block}
 .stretch-gallery .routine-image,.guide-visual>.routine-image{width:260px;max-width:100%;height:260px;aspect-ratio:1/1;object-fit:contain;background:#fff;border-radius:12px}
+
+/* Independent constellation collection tab */
+#screen-constellations .constellation-panel{padding:22px 18px}
+#screen-constellations .constellation-current{min-height:175px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(circle at center,#8e86da22,transparent 68%);border-radius:18px;margin:16px 0}
+#screen-constellations .constellation-art{font-size:34px;color:#f0dfa6}
+#screen-constellations .constellation-gallery{margin-top:15px}
+#screen-constellations .constellation-card{min-height:108px;display:flex;flex-direction:column;justify-content:center;gap:4px}
+.bottom-nav .nav-item{min-width:0;max-width:108px}
+@media(max-width:360px){.bottom-nav .nav-item small{font-size:9px}.bottom-nav .nav-item span{font-size:19px}}
