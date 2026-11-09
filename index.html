@@ -36,7 +36,7 @@
 </section>
 
 <section class="screen" id="screen-rituals">
-  <div class="page-heading"><p class="eyebrow">A LITTLE RITUAL</p><h1>今の気分はどれに近い？</h1><p>好きなものをひとつ選んでみよう。</p></div>
+  <div class="page-heading"><p class="eyebrow">A LITTLE RITUAL</p><h1>今の気分はどれに近い？</h1><p>各習慣で1日1星、最大3星を集められます。</p></div>
   <div class="ritual-list">
     <button class="ritual" data-ritual="breath"><span class="ritual-icon">〰</span><span class="grow"><b>呼吸を整える</b><small>自然な呼吸を感じる · 1分</small></span><span class="arrow">›</span></button>
     <button class="ritual" data-ritual="stretch"><span class="ritual-icon">✧</span><span class="grow"><b>体をゆるめる</b><small>肩や背中をゆっくり伸ばす · 2分</small></span><span class="arrow">›</span></button>
@@ -62,7 +62,7 @@
     </div>
     <div class="timer" id="timer">01:00</div><p class="timer-note" id="timer-note">準備ができたら始めましょう</p>
     <button class="primary" id="timer-toggle">始める <span>→</span></button>
-    <button class="plain-link" id="finish-now">このまま完了する</button>
+    <button class="plain-link" id="finish-now">タイマーを終えて回答する</button>
     <button class="plain-link muted-link" data-screen="rituals">別の習慣を選ぶ</button>
   </div>
 </section>
@@ -75,9 +75,9 @@
     <p class="intro" id="complete-message">今日も自分を休ませる時間が作れたね。</p>
     <div class="summary-line"><span>今夜の習慣</span><strong id="completed-name">呼吸を整える · 完了</strong></div>
     <div class="self-check" id="self-check">
-      <h2 id="self-check-title">今の自分に、ひとこと。</h2>
-      <p id="self-check-question">少しでも、体や気持ちがゆるみましたか？</p>
-      <div class="self-check-actions"><button class="secondary" id="self-check-yes" type="button">できました ✦</button><button class="secondary" id="self-check-skip" type="button">今日は評価しない</button></div>
+      <h2 id="self-check-title">この習慣はできましたか？</h2>
+      <p id="self-check-question">「はい」で、この習慣の星を1日1回もらえます。</p>
+      <div class="self-check-actions"><button class="secondary" id="self-check-yes" type="button">はい（星をもらう）</button><button class="secondary" id="self-check-skip" type="button">いいえ</button></div>
       <p class="status" id="star-status" role="status"></p>
     </div>
     <button class="primary" data-screen="journal">今週の記録を見る <span>→</span></button>
@@ -124,13 +124,14 @@
   </article>
   <form class="panel form-panel" id="sleep-form">
     <h2>睡眠・スマートフォンの記録</h2><p class="muted">わかる範囲で大丈夫。入力した内容はこの端末に保存されます。</p>
+    <label>記録日<input id="record-date" type="date" required></label>
     <label>ベッドに入った時刻<input id="bedtime" type="time"></label>
     <label>寝つくまでの時間（分）<input id="latency" type="number" min="0" max="600" inputmode="numeric" placeholder="例：20"></label>
     <label>寝る前のスマートフォン使用（分）<input id="phone" type="number" min="0" max="600" inputmode="numeric" placeholder="例：45"></label>
     <label>起きた時刻<input id="waketime" type="time"></label>
     <label>目覚めたときの感覚 <output id="feeling-label">ふつう</output><input id="feeling" type="range" min="1" max="5" value="3"><span class="range-labels"><small>すっきりしない</small><small>すっきり</small></span></label>
     <label>今日のひとこと（任意）<textarea id="note" rows="2" maxlength="160" placeholder="気づいたことがあれば"></textarea></label>
-    <button class="primary" type="submit">今日の記録を保存 <span>→</span></button><p class="status" id="record-status" role="status"></p>
+    <button class="primary" type="submit">選んだ日の記録を保存 <span>→</span></button><p class="status" id="record-status" role="status"></p>
     <button class="secondary" type="button" id="export-data">記録をCSVで書き出す ↓</button>
   </form>
   <p class="data-disclaimer">このアプリは医療的な診断を行いません。記録は端末内に保存されます。ブラウザのデータを削除すると消える場合があります。</p>
@@ -139,12 +140,12 @@
 <section class="screen" id="screen-constellations">
   <div class="page-heading"><p class="eyebrow">MY CONSTELLATIONS</p><h1>星座を眺める</h1><p>小さな夜の積み重ねが、星座になって残ります。</p></div>
   <article class="panel constellation-panel">
-    <div class="panel-title"><h2>今週の星空</h2><span class="muted" id="constellation-count">0個</span></div>
-    <p class="muted">1週間に星を3つ集めると、その週の星座が完成します。</p>
+    <div class="panel-title"><h2>今日の星空</h2><span class="muted" id="constellation-count">0個</span></div>
+    <p class="muted">3つの習慣で今日の星を3つ集めると、1日1つ星座が完成します。</p>
     <div id="constellation-current" class="constellation-current"><span class="constellation-art">✧ · ✦</span><p>今週の星を集めて、星座を灯そう。</p></div>
     <div id="constellation-gallery" class="constellation-gallery"></div>
   </article>
-  <p class="soft-note">星は1日1つ。1週間に3つ集めると、その週の星座が完成します。</p>
+  <p class="soft-note">連続達成4日目は「3日坊主回避の星座」が確定。通常はノーマル70%・レア25%・スーパーレア5%です。</p>
 </section>
 
 <section class="screen" id="screen-settings">

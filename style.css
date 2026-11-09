@@ -34,3 +34,5 @@ main{max-width:560px;margin:auto;padding:0 18px}.screen{display:none;animation:f
 #screen-constellations .constellation-card{min-height:108px;display:flex;flex-direction:column;justify-content:center;gap:4px}
 .bottom-nav .nav-item{min-width:0;max-width:108px}
 @media(max-width:360px){.bottom-nav .nav-item small{font-size:9px}.bottom-nav .nav-item span{font-size:19px}}
+
+.ritual.earned{border-color:#e6ca84}.ritual.earned .arrow::before{content:"獲得済み ✦ ";font-size:12px} input[type=date]{color-scheme:dark}
