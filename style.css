@@ -54,3 +54,13 @@ main{max-width:560px;margin:auto;padding:0 18px}.screen{display:none;animation:f
 #screen-constellations .constellation-gallery{align-items:stretch;grid-auto-rows:minmax(154px,auto)}
 #screen-constellations .zodiac-card{overflow:hidden;contain:paint;min-width:0}
 #screen-constellations .zodiac-card-preview{top:0;bottom:0;right:0;left:auto;width:72%;height:100%;max-width:none;object-fit:cover;object-position:center center;display:block;transform:none}
+
+/* 2026-11-15: task execution screens use the supplied instructional posters. */
+#screen-session .session{padding-top:12px}
+#screen-session .breath-orb,#screen-session #session-title,#screen-session #session-desc{display:none}
+#screen-session .routine-guide{display:block;max-width:100%;padding:0;margin:14px auto 16px;background:transparent;border:0}
+#screen-session .guide-visual{height:auto!important;min-height:0!important;display:block!important;font-size:initial}
+#screen-session .yoru-session-poster{display:block;width:100%;height:auto;max-height:min(67dvh,720px);object-fit:contain;margin:0 auto;border-radius:16px;background:transparent}
+#screen-session #guide-caption{display:none}
+#screen-session .timer{margin-top:8px}
+@media(max-width:400px){#screen-session .yoru-session-poster{max-height:61dvh}}

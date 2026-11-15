@@ -17,7 +17,34 @@ function notify(msg){const el=$("toast");el.textContent=msg;el.classList.add("sh
 function go(screen){document.querySelectorAll(".screen").forEach(el=>el.classList.toggle("active",el.id===`screen-${screen}`));document.querySelectorAll(".nav-item").forEach(el=>el.classList.toggle("active",el.dataset.screen===screen));document.body.classList.toggle("hide-nav",screen==="goodnight");if(screen==="home")renderHome();if(screen==="journal")renderJournal();if(screen==="constellations")renderConstellations();if(screen==="settings")renderSettings();window.scrollTo({top:0,behavior:"smooth"})}
 document.querySelectorAll("[data-screen]").forEach(el=>el.addEventListener("click",()=>go(el.dataset.screen)));
 function renderHome(){const d=new Date();$("today-date").textContent=new Intl.DateTimeFormat("ja-JP",{month:"long",day:"numeric",weekday:"short"}).format(d).toUpperCase();$("star-count").textContent=data.stars;const done=data.rituals[todayKey()]?.done;const key=data.rituals[todayKey()]?.type||chosen;const r=ROUTINES[key]||ROUTINES.breath;$("home-routine-title").textContent=done?"今夜の習慣は完了しました":r.name;$("home-routine-desc").textContent=done?"おつかれさま。今夜も自分のペースで。":r.desc;$("home-symbol").textContent=done?"✦":r.icon}
-function beginRitual(key){chosen=key;const r=ROUTINES[key];remaining=r.seconds;running=false;stopInterval();$("session-icon").textContent=r.icon;$("session-title").textContent=r.title;$("session-desc").textContent=r.detail;$("timer").textContent=fmt(remaining);$("timer-note").textContent="準備ができたら始めましょう";$("timer-toggle").innerHTML='始める <span>→</span>';$("breath-orb").classList.remove("running");const visual=$("guide-visual");visual.dataset.kind=key;const guides={breath:{caption:"鼻から自然に吸って、ゆっくり吐く。呼吸を無理に変えなくても大丈夫。",art:"◯",extra:"〰"},stretch:{caption:"肩をゆっくり回し、首や背中を心地よい範囲で伸ばそう。痛みがあれば中止してね。",art:"↗",extra:"✧"},quiet:{caption:"楽な姿勢で目を閉じるか、ぼんやり過ごそう。何もしなくても大丈夫。",art:"☾",extra:"·"}};const g=guides[key];const guide=$('routine-guide');guide.hidden=key==='breath';if(key==='quiet'){visual.innerHTML='<img class="routine-image" src="./images/quiet-meditation.png" alt="座って目を閉じ、静かに休息する男性のイラスト">';}else if(key==='stretch'){visual.innerHTML='<div class="stretch-gallery"><img class="routine-image" src="./images/stretch-back.jpg" alt="背中を丸めたり伸ばしたりするストレッチ"><img class="routine-image" src="./images/stretch-shoulders.png" alt="両肘を曲げて肩を回すストレッチ"><img class="routine-image" src="./images/stretch-neck.png" alt="首を横にゆっくり倒すストレッチ"></div>';}else{visual.innerHTML='';}$("guide-caption").textContent=g.caption;$("self-check").hidden=false;$("star-status").textContent="";go("session")}
+function beginRitual(key){
+ chosen=key;
+ const r=ROUTINES[key];
+ remaining=r.seconds;
+ running=false;
+ stopInterval();
+ $("session-icon").textContent=r.icon;
+ $("session-title").textContent=r.title;
+ $("session-desc").textContent=r.detail;
+ $("timer").textContent=fmt(remaining);
+ $("timer-note").textContent="準備ができたら始めましょう";
+ $("timer-toggle").innerHTML='始める <span>→</span>';
+ $("breath-orb").classList.remove("running");
+ const visual=$("guide-visual");
+ visual.dataset.kind=key;
+ const captions={breath:"深呼吸のガイド",stretch:"ストレッチのガイド",quiet:"静かな休息のガイド"};
+ const img=document.createElement("img");
+ img.className="yoru-session-poster";
+ img.src="./images/routine/"+key+".webp";
+ img.alt=captions[key]+"。"+r.detail;
+ img.decoding="async";
+ visual.replaceChildren(img);
+ $("routine-guide").hidden=false;
+ $("guide-caption").textContent="";
+ $("self-check").hidden=false;
+ $("star-status").textContent="";
+ go("session");
+}
 function fmt(n){return `${String(Math.floor(n/60)).padStart(2,"0")}:${String(n%60).padStart(2,"0")}`}
 function stopInterval(){if(interval)clearInterval(interval);interval=null;running=false;$("breath-orb").classList.remove("running")}
 const toggleTimerOriginal=toggleTimer;
