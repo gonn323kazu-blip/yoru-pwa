@@ -8,7 +8,7 @@
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" href="./icons/icon-192.png">
 <link rel="apple-touch-icon" href="./icons/icon-192.png">
-<link rel="stylesheet" href="./style.css">
+<link rel="stylesheet" href="./style.css?v=20261115fix2">
 <title>YORU — 夜を整え、星を育てる</title>
 </head>
 <body>
@@ -141,8 +141,8 @@
   <div class="page-heading"><p class="eyebrow">THE TWELVE ZODIAC SIGNS</p><h1>十二星座を育てる</h1><p>お気に入りの星座を選んで、夜の習慣でひとつずつ星を灯そう。</p></div>
   <article class="panel constellation-panel">
     <div class="panel-title"><h2>育成中の星座</h2><span class="muted" id="constellation-count">0 / 12 完成</span></div>
-    <div id="constellation-current" class="constellation-current"></div>
-    <div id="constellation-gallery" class="constellation-gallery"></div>
+    <div id="constellation-current" class="constellation-current"><p>育てたい星座を下の一覧から選んでください。</p></div>
+    <div id="constellation-gallery" class="constellation-gallery"><button type="button" class="constellation-card zodiac-card" data-zodiac-fallback="aries"><span class="zodiac-symbol">♈</span><b>おひつじ座</b><small>星座を選ぶ</small></button><button type="button" class="constellation-card zodiac-card" data-zodiac-fallback="taurus"><span class="zodiac-symbol">♉</span><b>おうし座</b><small>星座を選ぶ</small></button><button type="button" class="constellation-card zodiac-card" data-zodiac-fallback="gemini"><span class="zodiac-symbol">♊</span><b>ふたご座</b><small>星座を選ぶ</small></button><button type="button" class="constellation-card zodiac-card" data-zodiac-fallback="cancer"><span class="zodiac-symbol">♋</span><b>かに座</b><small>星座を選ぶ</small></button><button type="button" class="constellation-card zodiac-card" data-zodiac-fallback="leo"><span class="zodiac-symbol">♌</span><b>しし座</b><small>星座を選ぶ</small></button><button type="button" class="constellation-card zodiac-card" data-zodiac-fallback="virgo"><span class="zodiac-symbol">♍</span><b>おとめ座</b><small>星座を選ぶ</small></button><button type="button" class="constellation-card zodiac-card" data-zodiac-fallback="libra"><span class="zodiac-symbol">♎</span><b>てんびん座</b><small>星座を選ぶ</small></button><button type="button" class="constellation-card zodiac-card" data-zodiac-fallback="scorpio"><span class="zodiac-symbol">♏</span><b>さそり座</b><small>星座を選ぶ</small></button><button type="button" class="constellation-card zodiac-card" data-zodiac-fallback="sagittarius"><span class="zodiac-symbol">♐</span><b>いて座</b><small>星座を選ぶ</small></button><button type="button" class="constellation-card zodiac-card" data-zodiac-fallback="capricorn"><span class="zodiac-symbol">♑</span><b>やぎ座</b><small>星座を選ぶ</small></button><button type="button" class="constellation-card zodiac-card" data-zodiac-fallback="aquarius"><span class="zodiac-symbol">♒</span><b>みずがめ座</b><small>星座を選ぶ</small></button><button type="button" class="constellation-card zodiac-card" data-zodiac-fallback="pisces"><span class="zodiac-symbol">♓</span><b>うお座</b><small>星座を選ぶ</small></button></div>
   </article>
   <p class="soft-note">タスク1つにつき1星、1日最大3星。途中で休んでも、集めた星は消えません。</p>
 </section>
@@ -169,6 +169,12 @@
   <button class="nav-item" data-screen="settings"><span>⚙</span><small>設定</small></button>
 </nav>
 <div class="toast" id="toast" role="status"></div>
-<script src="./app.js"></script>
+<script>
+window.addEventListener('error',function(e){
+ const current=document.getElementById('constellation-current');
+ if(current && !window.YORU_ZODIAC_READY){current.innerHTML='<p>星座の読み込みに問題が発生しました。ページを再読み込みしてください。</p>';}
+});
+</script>
+<script src="./app.js?v=20261115fix2"></script>
 </body>
 </html>
