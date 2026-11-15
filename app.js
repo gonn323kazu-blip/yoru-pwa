@@ -141,49 +141,39 @@ function zodiacState(){data.zodiac??={active:null,progress:{},completed:{}};data
 function zodiacInfo(id){return ZODIAC.find(z=>z.id===id)}
 function addZodiacStar(k){const z=zodiacState(),item=zodiacInfo(z.active);if(!item)return '星を獲得しました（星座は未選択）';if(z.completed[item.id])return '星座は完成済みです';const count=Math.min(item.need,(z.progress[item.id]||0)+1);z.progress[item.id]=count;if(count===item.need){z.completed[item.id]={date:k,completedAt:new Date().toISOString()};z.active=null;return item.name+'が完成！'}return item.name+' '+count+'/'+item.need+'星'}
 function selectZodiac(id){const item=zodiacInfo(id),z=zodiacState();if(!item||z.completed[id])return;if(z.active&&z.active!==id&&!confirm('育成する星座を変更しますか？ 今まで灯した星はそのまま残ります。'))return;const prev=z.active;z.active=id;if(!commit()){z.active=prev;return}renderConstellations();notify(item.name+'を育て始めます ✦')}
-// 黄道十二星座の代表的な星の結び方をもとにした模式図。
-// 座標は表示用に正規化した図案で、厳密な天球座標・恒星数ではありません。
-// 各線分の途中に補助星を加え、ゲーム上の必要星数と一致させています。
-const ZODIAC_SHAPES={
- aries:{p:[[42,118],[88,96],[143,87],[190,67]],e:[[0,1],[1,2],[2,3]]},
- taurus:{p:[[35,37],[97,85],[147,113],[191,86],[254,37],[177,151],[127,173],[91,193],[228,164]],e:[[0,1],[1,2],[2,3],[3,4],[2,5],[5,6],[6,7],[5,8]]},
- gemini:{p:[[95,34],[184,41],[104,82],[188,86],[113,128],[191,135],[75,183],[137,184],[169,183],[230,187]],e:[[0,1],[0,2],[1,3],[2,3],[2,4],[3,5],[4,5],[4,6],[4,7],[5,8],[5,9]]},
- cancer:{p:[[62,58],[118,91],[161,115],[215,81],[252,54],[147,165],[104,188],[205,181]],e:[[0,1],[1,2],[2,3],[3,4],[2,5],[5,6],[5,7]]},
- leo:{p:[[65,63],[106,35],[151,45],[178,81],[149,111],[107,104],[76,127],[120,162],[196,158],[245,129],[262,166]],e:[[0,1],[1,2],[2,3],[3,4],[4,5],[5,0],[5,6],[6,7],[7,8],[8,9],[9,10],[4,8]]},
- virgo:{p:[[48,64],[100,82],[145,65],[183,97],[245,90],[202,143],[158,163],[108,146],[71,181],[243,183]],e:[[0,1],[1,2],[2,3],[3,4],[3,5],[5,6],[6,7],[7,8],[5,9],[1,7]]},
- libra:{p:[[85,53],[203,55],[240,124],[174,165],[87,154],[53,111]],e:[[0,1],[1,2],[2,3],[3,4],[4,5],[5,0],[0,4],[1,3]]},
- scorpio:{p:[[59,43],[97,61],[128,93],[151,127],[172,156],[198,174],[230,170],[254,146],[265,112],[243,96]],e:[[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,8],[8,9]]},
- sagittarius:{p:[[69,52],[130,51],[174,82],[220,60],[245,109],[187,120],[151,156],[104,134],[67,173],[210,176]],e:[[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,8],[1,7],[2,5],[5,9]]},
- capricorn:{p:[[47,74],[94,48],[163,77],[241,68],[263,113],[209,165],[153,185],[99,159]],e:[[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,0],[2,6]]},
- aquarius:{p:[[42,71],[84,45],[121,74],[163,50],[204,76],[251,58],[188,115],[146,144],[111,171],[72,154],[224,180]],e:[[0,1],[1,2],[2,3],[3,4],[4,5],[4,6],[6,7],[7,8],[8,9],[6,10]]},
- pisces:{p:[[51,66],[79,39],[118,47],[138,80],[108,111],[73,111],[166,127],[195,101],[229,105],[252,138],[230,171],[195,178],[172,156]],e:[[0,1],[1,2],[2,3],[3,4],[4,5],[5,0],[3,6],[6,7],[7,8],[8,9],[9,10],[10,11],[11,12],[12,7]]}
+// Bright-star reference coordinates (RA in degrees, Dec in degrees; J2000, rounded).
+// Connections are a simplified visual convention; IAU defines boundaries, not official stick figures.
+// Each constellation uses its own tangent-free RA/Dec projection, with RA increasing to the left.
+const ZODIAC_SKY_DATA={
+ aries:{stars:[[31.79,23.46],[28.66,20.81],[28.38,19.29],[33.25,21.04]],edges:[[0,1],[1,2],[0,3]]},
+ taurus:{stars:[[68.98,16.51],[67.15,15.87],[65.73,17.54],[64.95,15.63],[81.57,28.61],[68.50,27.96],[60.17,12.49],[56.87,24.11],[65.09,15.63]],edges:[[0,1],[1,2],[2,3],[0,4],[0,5],[3,6],[5,7],[1,8]]},
+ gemini:{stars:[[113.65,31.89],[116.33,28.03],[100.98,25.13],[99.43,16.40],[93.72,22.51],[95.74,22.51],[107.10,21.98],[110.03,21.98],[101.32,12.90],[97.20,16.40]],edges:[[0,1],[0,2],[2,4],[4,5],[1,6],[6,7],[2,3],[3,8],[5,9]]},
+ cancer:{stars:[[130.82,21.47],[131.17,18.15],[124.13,9.19],[134.62,11.86],[126.41,18.15]],edges:[[0,1],[1,2],[1,3],[1,4]]},
+ leo:{stars:[[152.09,11.97],[146.46,23.77],[154.99,19.84],[168.53,20.52],[177.26,14.57],[170.98,10.53],[148.19,26.01],[154.17,23.42],[174.24,14.57]],edges:[[0,1],[1,6],[6,7],[7,2],[2,0],[2,3],[3,4],[4,5],[5,0],[4,8]]},
+ virgo:{stars:[[201.30,-11.16],[190.42,-1.45],[184.98,-0.67],[176.46,6.53],[177.67,1.76],[193.90,3.40],[203.67,-0.60],[195.54,10.96],[186.73,12.56]],edges:[[0,1],[1,2],[2,3],[3,4],[2,5],[5,6],[5,7],[7,8]]},
+ libra:{stars:[[229.25,-9.38],[222.72,-16.04],[233.88,-14.79],[234.66,-28.14],[227.98,-25.28]],edges:[[0,1],[0,2],[1,4],[4,3],[3,2]]},
+ scorpio:{stars:[[247.35,-26.43],[240.08,-22.62],[241.36,-19.81],[252.54,-34.29],[253.08,-38.05],[264.33,-42.99],[263.40,-37.10],[265.62,-39.03],[248.97,-28.22],[245.30,-25.59],[239.71,-26.11]],edges:[[2,1],[1,0],[0,9],[9,8],[8,3],[3,4],[4,5],[5,6],[6,7],[0,10]]},
+ sagittarius:{stars:[[283.82,-34.38],[276.04,-34.38],[271.45,-30.42],[275.25,-29.83],[281.41,-26.99],[290.97,-40.62],[284.74,-37.10],[274.41,-36.76],[271.25,-29.58]],edges:[[0,1],[1,2],[2,3],[3,4],[4,0],[0,6],[6,5],[1,7],[2,8]]},
+ capricorn:{stars:[[326.76,-16.13],[325.02,-16.66],[321.67,-16.66],[305.25,-14.78],[304.51,-12.54],[311.55,-10.57],[316.49,-17.23],[320.56,-16.83]],edges:[[0,1],[1,2],[2,7],[7,6],[6,3],[3,4],[4,5],[5,0]]},
+ aquarius:{stars:[[331.45,-0.32],[334.21,-0.02],[340.67,-5.57],[343.66,-15.82],[322.89,-5.57],[320.52,-9.50],[326.05,-9.50],[347.36,-21.17],[335.41,-1.39]],edges:[[0,1],[1,8],[8,2],[2,3],[0,4],[4,5],[5,6],[3,7]]},
+ pisces:{stars:[[15.74,7.89],[12.17,7.59],[11.00,3.28],[17.14,2.76],[23.99,6.14],[27.87,3.19],[30.51,2.76],[346.19,3.82],[351.99,6.38],[355.51,1.78],[359.83,6.86],[7.58,5.28]],edges:[[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[0,11],[11,10],[10,9],[9,8],[8,7]]}
 };
-function zodiacGeometry(item){
- const shape=ZODIAC_SHAPES[item.id],points=shape.p.map(p=>[...p]),edges=shape.e.map(e=>[...e]);
- // 線分を分割して進捗用の星を補い、輪郭を崩さない。
- while(points.length<item.need){
-  let chosen=0,longest=-1;
-  edges.forEach(([a,b],i)=>{const d=(points[a][0]-points[b][0])**2+(points[a][1]-points[b][1])**2;if(d>longest){longest=d;chosen=i}});
-  const [a,b]=edges.splice(chosen,1),mid=points.length;
-  points.push([(points[a][0]+points[b][0])/2,(points[a][1]+points[b][1])/2]);
-  edges.push([a,mid],[mid,b]);
- }
- return {points,edges};
-}
 function zodiacSky(item,count){
  const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');
  svg.setAttribute('viewBox','0 0 320 208');svg.setAttribute('class','zodiac-sky');svg.setAttribute('role','img');
- svg.setAttribute('aria-label',item.name+'の星の並び '+count+' / '+item.need+'星（模式図）');
- const {points,edges}=zodiacGeometry(item);
- // 星が順番に灯るように、星の接続関係をたどって順序を決定する。
- const order=[],seen=new Set(),queue=[0];
- while(queue.length){const i=queue.shift();if(seen.has(i))continue;seen.add(i);order.push(i);for(const [a,b] of edges){if(a===i&&!seen.has(b))queue.push(b);if(b===i&&!seen.has(a))queue.push(a)}}
- for(let i=0;i<points.length;i++)if(!seen.has(i))order.push(i);
- const lit=new Set(order.slice(0,count));
- for(const [a,b] of edges){const line=document.createElementNS(ns,'line');line.setAttribute('x1',points[a][0]);line.setAttribute('y1',points[a][1]);line.setAttribute('x2',points[b][0]);line.setAttribute('y2',points[b][1]);line.setAttribute('class',lit.has(a)&&lit.has(b)?'zodiac-line lit':'zodiac-line');svg.appendChild(line)}
- points.forEach(([x,y],i)=>{const c=document.createElementNS(ns,'circle');c.setAttribute('cx',x);c.setAttribute('cy',y);c.setAttribute('r',lit.has(i)?'4.6':'3.1');c.setAttribute('class',lit.has(i)?'zodiac-dot lit':'zodiac-dot');svg.appendChild(c)});
+ svg.setAttribute('aria-label',item.name+' 実際の恒星座標を基にした星図。'+count+' / '+item.need+' 獲得');
+ const chart=ZODIAC_SKY_DATA[item.id],stars=chart.stars;
+ // Unwrap right ascension to handle Pisces crossing the zero meridian.
+ const ra=stars.map(v=>v[0]),ref=ra[0],unwrapped=ra.map(x=>ref+((x-ref+540)%360)-180);
+ const minX=Math.min(...unwrapped),maxX=Math.max(...unwrapped),minY=Math.min(...stars.map(v=>v[1])),maxY=Math.max(...stars.map(v=>v[1]));
+ const scale=Math.min(258/Math.max(maxX-minX,5),152/Math.max(maxY-minY,5));
+ const coords=stars.map((v,i)=>[160-(unwrapped[i]-(minX+maxX)/2)*scale,104-(v[1]-(minY+maxY)/2)*scale]);
+ const lit=Math.min(stars.length,Math.floor(count/item.need*stars.length));
+ function node(tag,attrs){const el=document.createElementNS(ns,tag);for(const [k,v] of Object.entries(attrs))el.setAttribute(k,String(v));return el}
+ chart.edges.forEach(([i,j])=>{const [x1,y1]=coords[i],[x2,y2]=coords[j];svg.append(node('line',{x1,y1,x2,y2,class:'zodiac-line'+(i<lit&&j<lit?' lit':'')}))});
+ coords.forEach(([cx,cy],i)=>{const circle=node('circle',{cx,cy,r:i<lit?4.6:3.1,class:'zodiac-dot'+(i<lit?' lit':'')});svg.append(circle)});
  return svg;
 }
-renderConstellations=function(){window.YORU_ZODIAC_READY=true;const z=zodiacState(),finished=ZODIAC.filter(item=>z.completed[item.id]).length;$('constellation-count').textContent=finished+' / 12 完成';const current=$('constellation-current');current.replaceChildren();const item=zodiacInfo(z.active);if(item){const count=Math.min(item.need,z.progress[item.id]||0);const title=document.createElement('h2');title.textContent=item.symbol+' '+item.name;const sky=zodiacSky(item,count);const info=document.createElement('p');info.textContent=count+' / '+item.need+' 星が灯りました。あと '+(item.need-count)+' 星で完成！';const track=document.createElement('div');track.className='zodiac-progress';const bar=document.createElement('span');bar.style.width=(100*count/item.need)+'%';track.append(bar);current.append(title,sky,info,track)}else{const p=document.createElement('p');p.textContent=finished===12?'十二星座をすべて完成させました！':'下の十二星座から、最初に育てたい星座を選んでください。';current.append(p)}const gallery=$('constellation-gallery');gallery.replaceChildren();document.querySelectorAll('.zodiac-legacy').forEach(el=>el.remove());ZODIAC.forEach(item=>{const count=Math.min(item.need,z.progress[item.id]||0),complete=!!z.completed[item.id],active=z.active===item.id;const card=document.createElement('button');card.type='button';card.className='constellation-card zodiac-card'+(active?' active':'')+(complete?' finished':'');card.disabled=complete;const mark=document.createElement('span');mark.className='zodiac-symbol';mark.textContent=item.symbol;const name=document.createElement('b');name.textContent=item.name;const info=document.createElement('small');info.textContent=complete?'完成済み ✓':count+' / '+item.need+' 星';const hint=document.createElement('small');hint.textContent=complete?'コレクション済み':active?'育成中':count?'選択して再開':'選んで育てる';card.append(mark,name,info,hint);if(!complete)card.addEventListener('click',()=>selectZodiac(item.id));gallery.append(card)});const old=Object.keys(extra.constellations||{}).length+Object.values(data.dailyRewards||{}).filter(d=>d.constellation).length;if(old){const note=document.createElement('p');note.className='muted zodiac-legacy';note.textContent='旧バージョンで完成した星座 '+old+' 個のデータも端末内に保存されています。';gallery.after(note)}};
+renderConstellations=function(){const z=zodiacState(),finished=ZODIAC.filter(item=>z.completed[item.id]).length;$('constellation-count').textContent=finished+' / 12 完成';const current=$('constellation-current');current.replaceChildren();const item=zodiacInfo(z.active);if(item){const count=Math.min(item.need,z.progress[item.id]||0);const title=document.createElement('h2');title.textContent=item.symbol+' '+item.name;const sky=zodiacSky(item,count);const info=document.createElement('p');info.textContent=count+' / '+item.need+' 星が灯りました。あと '+(item.need-count)+' 星で完成！';const track=document.createElement('div');track.className='zodiac-progress';const bar=document.createElement('span');bar.style.width=(100*count/item.need)+'%';track.append(bar);current.append(title,sky,info,track)}else{const p=document.createElement('p');p.textContent=finished===12?'十二星座をすべて完成させました！':'下の十二星座から、最初に育てたい星座を選んでください。';current.append(p)}const gallery=$('constellation-gallery');gallery.replaceChildren();document.querySelectorAll('.zodiac-legacy').forEach(el=>el.remove());ZODIAC.forEach(item=>{const count=Math.min(item.need,z.progress[item.id]||0),complete=!!z.completed[item.id],active=z.active===item.id;const card=document.createElement('button');card.type='button';card.className='constellation-card zodiac-card'+(active?' active':'')+(complete?' finished':'');card.disabled=complete;const mark=document.createElement('span');mark.className='zodiac-symbol';mark.textContent=item.symbol;const name=document.createElement('b');name.textContent=item.name;const info=document.createElement('small');info.textContent=complete?'完成済み ✓':count+' / '+item.need+' 星';const hint=document.createElement('small');hint.textContent=complete?'コレクション済み':active?'育成中':count?'選択して再開':'選んで育てる';const preview=document.createElement('img');preview.className='zodiac-card-preview';preview.src='./images/zodiac/'+item.id+'.webp';preview.alt=item.name+'の完成イメージ';preview.loading='lazy';card.append(mark,name,info,hint,preview);if(!complete)card.addEventListener('click',()=>selectZodiac(item.id));gallery.append(card)});const old=Object.keys(extra.constellations||{}).length+Object.values(data.dailyRewards||{}).filter(d=>d.constellation).length;if(old){const note=document.createElement('p');note.className='muted zodiac-legacy';note.textContent='旧バージョンで完成した星座 '+old+' 個のデータも端末内に保存されています。';gallery.after(note)}};
 $("timer-toggle").addEventListener("click",toggleTimer);
 renderHome();renderSettings();renderJournal();renderConstellations();renderInsight();if(data.settings.reminder)startReminderCheck();
